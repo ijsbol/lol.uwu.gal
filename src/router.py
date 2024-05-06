@@ -21,7 +21,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 routers: List[Tuple[APIRouter, str]] = [
-    (ip_memes_router, "/"),
+    (ip_memes_router, ""),
 ]
 
 
