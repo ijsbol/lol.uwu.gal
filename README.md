@@ -1,0 +1,2 @@
+# lol.uwu.gal
+ Funny :)
