@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lol.uwu.gal</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>lol.uwu.gal</h1>
+        <div class="detail">
+            <p>GitHub: <a href="https://git.uwu.gal/lol.uwu.gal">Isabe1le/lol.uwu.gal</a></p>
+        </div>
+    </header>
+    <main>
+        <div class="grid-container">
+            {% for subpage in subpages %}
+                <a href="{{ subpage.link }}" target="_blank">{{ subpage.name }}</a>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

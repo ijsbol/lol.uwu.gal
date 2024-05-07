@@ -1,20 +1,15 @@
-import json
-from typing import Dict, Final, Union, cast
+from typing import Union, cast
 
 from aiohttp import ClientResponseError, ClientSession, ContentTypeError
 import cv2
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 
+from utils.config import ENABLED_MEMES
 from utils.types import IPAPI_IPInformation_fail, IPAPI_IPInformation_success, IPInformation, IPMemes
 
 
-
 router = APIRouter()
-
-
-with open("config/ip_memes.json", "r") as f:
-    ENABLED_MEMES: Final[Dict[str, IPMemes]] = json.loads(f.read())
 
 
 async def get_ip_information(ip: str) -> IPInformation:

@@ -1,5 +1,6 @@
 {
     "garfield": {
+        "name": "Garfield knows where you live",
         "file_location": "static/videos/garfield.mp4",
         "frames": {
             "start": 295,

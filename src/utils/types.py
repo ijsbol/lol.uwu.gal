@@ -30,6 +30,7 @@ class IPInformation(TypedDict):
 
 
 class IPMemes(TypedDict):
+    name: str
     file_location: str
     frames: IPMemes_frames
     position: IPMemes_position

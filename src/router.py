@@ -3,13 +3,12 @@ from typing import Any, List, Tuple
 
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from starlette.templating import (
     _TemplateResponse,  # pyright: ignore[reportPrivateUsage]
 )
 
 from routers.ip_memes.router import router as ip_memes_router
-
+from utils.config import ENABLED_MEMES, templates
 
 @asynccontextmanager
 async def lifecycle(app: FastAPI):
@@ -17,7 +16,6 @@ async def lifecycle(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifecycle)
-templates = Jinja2Templates(directory="templates")
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -30,6 +28,22 @@ routers: List[Tuple[APIRouter, str]] = [
 
 for router, prefix in routers:
     app.include_router(router, prefix=prefix)
+
+
+@app.get("/")
+async def home_page(request: Request) -> _TemplateResponse:
+    return templates.TemplateResponse(
+        name="home_page.jinja",
+        context={
+            "request": request,
+            "subpages": [
+                {
+                    "link": f"v/{uri}",
+                    "name": ENABLED_MEMES[uri]["name"],
+                } for uri in ENABLED_MEMES
+            ]
+        },
+    )
 
 
 @app.exception_handler(404)
