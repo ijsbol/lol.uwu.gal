@@ -2,15 +2,17 @@
     "garfield": {
         "file_location": "static/videos/garfield.mp4",
         "frames": {
-            "start": 100,
-            "end": 200
+            "start": 295,
+            "end": 875
         },
         "position": {
-            "x": 100,
-            "y": 200
+            "x": 480,
+            "y": 400
         },
-        "font": {
-            "size": 40,
+        "text": {
+            "size": 2,
+            "colour": [255, 255, 255],
+            "thickness": 8,
             "location": "static/fonts/arial-bold.ttf"
         }
     }
