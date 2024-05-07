@@ -1,2 +1,6 @@
 uvicorn
 fastapi
+gunicorn
+itsdangerous
+aiohttp
+opencv-python
