@@ -16,7 +16,7 @@ class IPAPI_IPInformation_success(TypedDict):
     city: str
     zip: str
     lat: float
-    long: float
+    lon: float
 
 
 class IPInformation(TypedDict):

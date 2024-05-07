@@ -57,7 +57,7 @@ async def get_ip_information(ip: str) -> IPInformation:
             "city": api_data["city"],
             "country": api_data["country"],
             "lat": str(api_data["lat"]),
-            "long": str(api_data["long"]),
+            "long": str(api_data["lon"]),
             "region": api_data["region"],
             "regionName": api_data["regionName"],
             "zip": api_data["zip"],
