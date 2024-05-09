@@ -80,8 +80,8 @@ async def ip_meme_gen(
         ip = request.headers['x-real-ip']
         ip_info: IPInformation = IPInformation(
             country=request.headers['cf-ipcountry'],
-            region=request.headers['cf-ipregion'],
-            regionName=request.headers['cf-ipregion'],
+            region=request.headers['cf-region'],
+            regionName=request.headers['cf-region'],
             city=request.headers['cf-ipicity'],
             zip=request.headers['cf-postal-code'],
             lat=request.headers['cf-iplatitude'],
