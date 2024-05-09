@@ -82,7 +82,7 @@ async def ip_meme_gen(
             country=request.headers['cf-ipcountry'],
             region=request.headers['cf-region'],
             regionName=request.headers['cf-region'],
-            city=request.headers['cf-ipicity'],
+            city=request.headers['cf-ipiity'],
             zip=request.headers['cf-postal-code'],
             lat=request.headers['cf-iplatitude'],
             long=request.headers['cf-iplongitude'],
