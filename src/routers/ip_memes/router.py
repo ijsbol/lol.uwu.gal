@@ -77,7 +77,7 @@ async def ip_meme_gen(
     cloudflare_protected = True if request.headers.get('cf-connecting-ip', None) is not None else False
     ip: str
     if cloudflare_protected:
-        ip = request.headers['x-real-ip']
+        ip = request.headers['cf-connecting-ip']
         ip_info: IPInformation = IPInformation(
             country=request.headers['cf-ipcountry'],
             region=request.headers['cf-region'],
