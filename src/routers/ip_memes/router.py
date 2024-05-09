@@ -74,7 +74,23 @@ async def ip_meme_gen(
     assert request.client is not None
 
     meme_config = ENABLED_MEMES[meme]
-    ip_info = await get_ip_information(request.client.host)
+    cloudflare_protected = True if request.headers.get('cf-connecting-ip', None) is not None else False
+    ip: str
+    if cloudflare_protected:
+        ip = request.headers['x-real-ip']
+        ip_info: IPInformation = IPInformation(
+            country=request.headers['cf-ipcountry'],
+            region=request.headers['cf-ipregion'],
+            regionName=request.headers['cf-ipregion'],
+            city=request.headers['cf-ipicity'],
+            zip=request.headers['cf-postal-code'],
+            lat=request.headers['cf-iplatitude'],
+            long=request.headers['cf-iplongitude'],
+        )
+    else:
+        ip = request.client.host
+        ip_info = await get_ip_information(ip)
+
     video_path = meme_config["file_location"]
     font = cv2.FONT_HERSHEY_SIMPLEX
     font_scale = meme_config["text"]["size"]
@@ -82,7 +98,7 @@ async def ip_meme_gen(
     position = (meme_config["position"]["x"], meme_config["position"]["y"])
     thickness = meme_config["text"]["thickness"]
     text = (
-        f"{request.client.host}"
+        f"{ip}"
         + f"\n{ip_info['city']}, {ip_info['region']}"
         + f"\n{ip_info['lat']}, {ip_info['long']}"
     )
