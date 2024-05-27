@@ -50,5 +50,27 @@
                 "location": "static/fonts/arial-bold.ttf"
             }
         }
+    },
+    "alien": {
+        "name": "Christmas alien knows where you live too",
+        "file_location": "static/videos/christmas-alien.mp4",
+        "ip": {
+            "frames": {
+                "start": 10,
+                "end": 90
+            },
+            "position": {
+                "x": 50,
+                "y": 50
+            },
+            "text": {
+                "size": 2,
+                "colour": [255, 255, 255],
+                "thickness": 8,
+                "location": "static/fonts/arial-bold.ttf"
+            }
+        },
+        "location": null,
+        "latlong": null
     }
 }
