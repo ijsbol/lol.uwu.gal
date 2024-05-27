@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, TypedDict
+from typing import Literal, Optional, TypedDict
 
 
 class IPAPI_IPInformation_fail(TypedDict):
@@ -29,25 +29,31 @@ class IPInformation(TypedDict):
     long: str
 
 
-class IPMemes(TypedDict):
+class Videos(TypedDict):
     name: str
     file_location: str
-    frames: IPMemes_frames
-    position: IPMemes_position
-    text: IPMemes_text
+    ip: Optional[Videos_render_data]
+    location: Optional[Videos_render_data]
+    latlong: Optional[Videos_render_data]
 
 
-class IPMemes_frames(TypedDict):
+class Videos_render_data(TypedDict):
+    frames: Videos_render_data_frames
+    position: Videos_render_data_position
+    text: Videos_render_data_text
+
+
+class Videos_render_data_frames(TypedDict):
     start: int
     end: int
 
 
-class IPMemes_position(TypedDict):
+class Videos_render_data_position(TypedDict):
     x: int
     y: int
 
 
-class IPMemes_text(TypedDict):
+class Videos_render_data_text(TypedDict):
     size: int
     colour: str
     location: str

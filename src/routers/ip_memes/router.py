@@ -1,4 +1,4 @@
-from typing import Union, cast
+from typing import Optional, Union, cast
 
 from aiohttp import ClientResponseError, ClientSession, ContentTypeError
 import cv2
@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 
 from utils.config import ENABLED_MEMES
-from utils.types import IPAPI_IPInformation_fail, IPAPI_IPInformation_success, IPInformation, IPMemes
+from utils.types import IPAPI_IPInformation_fail, IPAPI_IPInformation_success, IPInformation, Videos, Videos_render_data
 
 
 router = APIRouter()
@@ -92,21 +92,9 @@ async def ip_meme_gen(
         ip_info = await get_ip_information(ip)
 
     video_path = meme_config["file_location"]
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    font_scale = meme_config["text"]["size"]
-    font_color = meme_config["text"]["colour"]
-    position = (meme_config["position"]["x"], meme_config["position"]["y"])
-    thickness = meme_config["text"]["thickness"]
-    text = (
-        f"{ip}"
-        + f"\n{ip_info['city']}, {ip_info['region']}"
-        + f"\n{ip_info['lat']}, {ip_info['long']}"
-    )
 
     def generate_frames():
         cap = cv2.VideoCapture(video_path)
-        text_start_frame = meme_config["frames"]["start"]
-        text_end_frame = meme_config["frames"]["end"]
         total_frame_count: int = cast(int, cap.read().count)
         current_frame = 0
 
@@ -116,15 +104,32 @@ async def ip_meme_gen(
                 break
 
             # Overlay text on the frame
-            if (
-                current_frame > text_start_frame
-                and current_frame < text_end_frame
-            ):
-                lines = text.split('\n')
-                y = 0
-                for line in lines:
-                    cv2.putText(frame, line, (position[0], position[1]+y), font, font_scale, font_color, thickness, cv2.LINE_AA)
-                    y += meme_config["text"]["size"] * 30
+            for conf_option in ["ip", "location", "latlong"]:
+                config = cast(Optional[Videos_render_data], meme_config[conf_option])
+                if config is None:
+                    continue
+                text_start_frame = config["frames"]["start"]
+                text_end_frame = config["frames"]["end"]
+
+                if (
+                    current_frame > text_start_frame
+                    and current_frame < text_end_frame
+                ):
+                    font = cv2.FONT_HERSHEY_SIMPLEX
+                    font_scale = config["text"]["size"]
+                    font_color = config["text"]["colour"]
+                    position = (config["position"]["x"], config["position"]["y"])
+                    thickness = config["text"]["thickness"]
+                    text = (
+                        ip if conf_option == "ip"
+                        else f"{ip_info['city']}, {ip_info['region']}" if conf_option == "location"
+                        else f"{ip_info['lat']}, {ip_info['long']}"
+                    )
+                    lines = text.split('\n')
+                    y = 0
+                    for line in lines:
+                        cv2.putText(frame, line, (position[0], position[1]+y), font, font_scale, font_color, thickness, cv2.LINE_AA)  # pyright: ignore[reportCallIssue, reportArgumentType]
+                        y += config["text"]["size"] * 30
 
             # Convert the frame to JPEG format
             _, buffer = cv2.imencode('.jpg', frame)

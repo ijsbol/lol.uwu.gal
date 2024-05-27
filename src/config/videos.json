@@ -1,0 +1,54 @@
+{
+    "garfield": {
+        "name": "Garfield knows where you live",
+        "file_location": "static/videos/garfield.mp4",
+        "ip": {
+            "frames": {
+                "start": 295,
+                "end": 875
+            },
+            "position": {
+                "x": 480,
+                "y": 400
+            },
+            "text": {
+                "size": 2,
+                "colour": [255, 255, 255],
+                "thickness": 8,
+                "location": "static/fonts/arial-bold.ttf"
+            }
+        },
+        "location": {
+            "frames": {
+                "start": 295,
+                "end": 875
+            },
+            "position": {
+                "x": 480,
+                "y": 475
+            },
+            "text": {
+                "size": 2,
+                "colour": [255, 255, 255],
+                "thickness": 8,
+                "location": "static/fonts/arial-bold.ttf"
+            }
+        },
+        "latlong": {
+            "frames": {
+                "start": 295,
+                "end": 875
+            },
+            "position": {
+                "x": 480,
+                "y": 550
+            },
+            "text": {
+                "size": 2,
+                "colour": [255, 255, 255],
+                "thickness": 8,
+                "location": "static/fonts/arial-bold.ttf"
+            }
+        }
+    }
+}
